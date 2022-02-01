@@ -1,1 +1,65 @@
-// TODO
+.container {
+  max-width: 1030px;
+  margin: 0 auto;
+  padding-top: 4rem;
+
+  .logo {
+    display: flex;
+
+    img:first-child {
+      height: 23.01px;
+      width: 40px;
+      margin-top: 0.3rem;
+    }
+    img {
+      margin-top: 1rem;
+    }
+
+    h2 {
+      padding-left: 1rem;
+      font-weight: bold;
+    }
+  }
+  .containerSection {
+    padding-top: 4.075rem;
+
+    a {
+      display: block;
+
+      & + a {
+        margin-top: 2rem;
+        padding-top: 0.3rem;
+        border-top: 1px solid #32323238;
+      }
+      h2 {
+        font-size: 1.5rem;
+        transition: color 0.2s;
+      }
+      p {
+        font-weight: 400;
+        margin-bottom: 1.3rem;
+      }
+      time {
+        display: flex;
+        justify-items: center;
+        align-items: center;
+        font-weight: 200;
+        font-size: 0.8rem;
+
+        .icon {
+          margin-right: 0.3rem;
+        }
+      }
+      &:hover h2 {
+        color: var(--highlight);
+      }
+    }
+  }
+  button {
+    color: var(--highlight);
+    border: none;
+    background: var(--background);
+    padding-top: 3rem;
+    font-weight: bold;
+  }
+}

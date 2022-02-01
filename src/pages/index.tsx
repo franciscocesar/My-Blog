@@ -1,5 +1,12 @@
 import { GetStaticProps } from 'next';
+import { RichText } from 'prismic-dom';
 
+import { format } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
+
+import { FiCalendar } from 'react-icons/fi';
+
+import Prismic from '@prismicio/client';
 import { getPrismicClient } from '../services/prismic';
 
 import commonStyles from '../styles/common.module.scss';
@@ -24,13 +31,78 @@ interface HomeProps {
   postsPagination: PostPagination;
 }
 
-// export default function Home() {
-//   // TODO
-// }
+export default function Home({ postsPagination }: HomeProps): JSX.Element {
+  // eslint-disable-next-line consistent-return
 
-// export const getStaticProps = async () => {
-//   // const prismic = getPrismicClient();
-//   // const postsResponse = await prismic.query(TODO);
+  return (
+    <div className={styles.container}>
+      <div className={styles.logo}>
+        <img src="./img/main.png" alt="teste" /> <h2>spacetraveling</h2>
+        <img src="./img/vetor.svg" alt="logo" />
+      </div>
+      <section className={styles.containerSection}>
+        {postsPagination.results.map(post => (
+          <a key={post.uid} href={`/post/${post.uid}`}>
+            <h2>{post.data.title}</h2>
+            <p>{post.data.subtitle}</p>
+            <time>
+              <FiCalendar className={styles.icon} />
+              15 mar 2021 {post.data.author}
+            </time>
+          </a>
+        ))}
+      </section>
+      <button type="button">
+        {postsPagination.next_page ? 'Carregar Mais' : ''}
+      </button>
+    </div>
+  );
+}
 
-//   // TODO
-// };
+export const getStaticProps: GetStaticProps = async () => {
+  const prismic = getPrismicClient();
+
+  const postsResponse = await prismic.query(
+    [Prismic.predicates.at('document.type', 'post')],
+    {
+      fetch: [
+        'post.title',
+        'post.subtitle',
+        'post.author',
+        'post.content',
+        'post.uid',
+      ],
+      pageSize: 20,
+    }
+  );
+
+  const posts = postsResponse.results.map(post => {
+    return {
+      uid: post.uid,
+      first_publication_date: format(
+        new Date(post.first_publication_date),
+        'data',
+        {
+          locale: ptBR,
+        }
+      ),
+      data: {
+        title: post.data.title,
+        subtitle: post.data.subtitle,
+        author: post.data.author,
+      },
+    };
+  });
+
+  const page = postsResponse.next_page;
+  console.log(page);
+  return {
+    props: {
+      postsPagination: {
+        next_page: page,
+        results: posts,
+      },
+    },
+  };
+
+};
