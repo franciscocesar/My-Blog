@@ -4,7 +4,7 @@ import { RichText } from 'prismic-dom';
 import { format } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 
-import { FiCalendar } from 'react-icons/fi';
+import { FiCalendar, FiGithub } from 'react-icons/fi';
 
 import Prismic from '@prismicio/client';
 import { getPrismicClient } from '../services/prismic';
@@ -37,8 +37,7 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
   return (
     <div className={styles.container}>
       <div className={styles.logo}>
-        <img src="./img/main.png" alt="teste" /> <h2>spacetraveling</h2>
-        <img src="./img/vetor.svg" alt="logo" />
+        <img src="./img/logo.png" alt="logo" />
       </div>
       <section className={styles.containerSection}>
         {postsPagination.results.map(post => (
@@ -47,7 +46,8 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
             <p>{post.data.subtitle}</p>
             <time>
               <FiCalendar className={styles.icon} />
-              15 mar 2021 {post.data.author}
+              15 mar 2021 <FiGithub className={styles.icon} />
+              {post.data.author}
             </time>
           </a>
         ))}
@@ -95,7 +95,7 @@ export const getStaticProps: GetStaticProps = async () => {
   });
 
   const page = postsResponse.next_page;
-  console.log(page);
+
   return {
     props: {
       postsPagination: {
@@ -104,5 +104,4 @@ export const getStaticProps: GetStaticProps = async () => {
       },
     },
   };
-
 };

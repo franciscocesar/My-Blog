@@ -5,20 +5,6 @@
 
   .logo {
     display: flex;
-
-    img:first-child {
-      height: 23.01px;
-      width: 40px;
-      margin-top: 0.3rem;
-    }
-    img {
-      margin-top: 1rem;
-    }
-
-    h2 {
-      padding-left: 1rem;
-      font-weight: bold;
-    }
   }
   .containerSection {
     padding-top: 4.075rem;
@@ -48,6 +34,7 @@
 
         .icon {
           margin-right: 0.3rem;
+          margin-left: 1rem;
         }
       }
       &:hover h2 {

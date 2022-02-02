@@ -1,1 +1,16 @@
-// TODO
+.container {
+  max-width: 100%;
+  height: 7rem;
+
+  .logo {
+    max-width: 1110px;
+    display: flex;
+    margin: 0 auto;
+    padding-top: 3rem;
+
+    h2 {
+      padding-left: 1rem;
+      font-weight: bold;
+    }
+  }
+}
